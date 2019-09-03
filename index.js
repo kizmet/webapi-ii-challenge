@@ -1,10 +1,11 @@
 // import server.js
-const server = require('./server.js');
+const server = require("./server.js");
 
 // configure port #
-const PORT = process.env.PORT || 4000;
+const port = 5000;
 
 // listen on port for requests
-server.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}...`);
+
+server.listen(port, function() {
+  console.log(`\n === Web API Listening on http://localhost:${port}===`);
 });
