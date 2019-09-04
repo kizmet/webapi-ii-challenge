@@ -2,12 +2,6 @@ import React, { useEffect } from "react";
 import { push } from "connected-react-router";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import {
-  increment,
-  incrementAsync,
-  decrement,
-  decrementAsync
-} from "../../modules/counter";
 import { fetchAsync } from "../../modules/posts";
 
 const Home = ({ fetchAsync, isFetching, posts, changePage }) => {
@@ -41,10 +35,6 @@ const mapStateToProps = ({ counter, posts }) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      increment,
-      incrementAsync,
-      decrement,
-      decrementAsync,
       changePage: id => push(`/${id}`),
       fetchAsync
     },

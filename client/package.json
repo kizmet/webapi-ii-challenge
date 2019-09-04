@@ -15,6 +15,7 @@
     "react-scripts": "2.1.8"
   },
   "dependencies": {
+    "antd": "^3.23.1",
     "connected-react-router": "4.5.0",
     "react": "16.9.0",
     "react-dom": "16.9.0",
