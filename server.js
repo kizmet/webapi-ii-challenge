@@ -13,13 +13,13 @@ server.use(express.json());
 server.use(cors());
 //server.use(morgan("dev"));
 
-
 // setup paths for routers
 server.use("/api/posts", PostsRouter);
 
 // GET request to root / to make sure everything is working
 server.get("/", (req, res) => {
-  res.json({ message: "API is up and running!" });
+  console.log(server.mountpath);
+  res.json({ message: "API is up and running!", path: server.baseUrl });
 });
 
 // export server

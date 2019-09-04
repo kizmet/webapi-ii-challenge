@@ -1,46 +1,42 @@
-import React from 'react'
-import { push } from 'connected-react-router'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import React, { useEffect } from "react";
+import { push } from "connected-react-router";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 import {
   increment,
   incrementAsync,
   decrement,
   decrementAsync
-} from '../../modules/counter'
+} from "../../modules/counter";
+import { fetchAsync } from "../../modules/posts";
 
-const Home = props => (
-  <div>
-    <h1>Home</h1>
-    <p>Count: {props.count}</p>
+const Home = ({ fetchAsync, isFetching, posts, changePage }) => {
+  useEffect(() => {
+    const loadData = () => fetchAsync();
+    loadData();
+  }, [fetchAsync]);
+  return (
+    <div>
+      <h1>Home</h1>
+      <ul>
+        {!isFetching &&
+          posts.map(post => (
+            <li key={post.id} onClick={() => changePage(post.id)}>
+              {post.title}
+            </li>
+          ))}
+      </ul>
+    </div>
+  );
+};
 
-    <p>
-      <button onClick={props.increment}>Increment</button>
-      <button onClick={props.incrementAsync} disabled={props.isIncrementing}>
-        Increment Async
-      </button>
-    </p>
-
-    <p>
-      <button onClick={props.decrement}>Decrement</button>
-      <button onClick={props.decrementAsync} disabled={props.isDecrementing}>
-        Decrement Async
-      </button>
-    </p>
-
-    <p>
-      <button onClick={() => props.changePage()}>
-        Go to about page via redux
-      </button>
-    </p>
-  </div>
-)
-
-const mapStateToProps = ({ counter }) => ({
+const mapStateToProps = ({ counter, posts }) => ({
   count: counter.count,
   isIncrementing: counter.isIncrementing,
-  isDecrementing: counter.isDecrementing
-})
+  isDecrementing: counter.isDecrementing,
+  posts: posts.posts,
+  isFetching: posts.isFetching
+});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
@@ -49,12 +45,13 @@ const mapDispatchToProps = dispatch =>
       incrementAsync,
       decrement,
       decrementAsync,
-      changePage: () => push('/about-us')
+      changePage: id => push(`/${id}`),
+      fetchAsync
     },
     dispatch
-  )
+  );
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Home)
+)(Home);
