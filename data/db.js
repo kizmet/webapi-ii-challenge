@@ -29,8 +29,8 @@ function insert(post) {
 
 function update(id, post) {
   return db('posts')
-    .where('id', Number(id))
-    .update(post);
+    .update(post)
+    .where({ id })
 }
 
 function remove(id) {
